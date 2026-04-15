@@ -1,13 +1,17 @@
 <!doctype html>
 <html lang="id" class="h-full">
- <head>
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sifat-Sifat Gereja</title>
+  
   <script src="https://cdn.tailwindcss.com/3.4.17"></script>
-  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  
   <script src="/_sdk/element_sdk.js"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&amp;family=Baloo+2:wght@500;700;800&amp;display=swap" rel="stylesheet">
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+  
   <script>
     tailwind.config = {
       theme: {
@@ -20,13 +24,18 @@
       }
     }
   </script>
+  
   <style>
-    html, body { height: 100%; margin: 0; }
+    html, body { height: 100%; margin: 0; box-sizing: border-box; }
+    
+    /* Card Animations */
     .card-flip { perspective: 1000px; }
-    .card-inner { transition: transform 0.6s; transform-style: preserve-3d; }
+    .card-inner { transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
     .card-flip.flipped .card-inner { transform: rotateY(180deg); }
     .card-front, .card-back { backface-visibility: hidden; }
     .card-back { transform: rotateY(180deg); }
+    
+    /* Entrance Animations */
     .bounce-in { animation: bounceIn 0.6s ease-out both; }
     @keyframes bounceIn {
       0% { transform: scale(0.3); opacity: 0; }
@@ -34,122 +43,126 @@
       70% { transform: scale(0.95); }
       100% { transform: scale(1); opacity: 1; }
     }
-    .float-emoji { animation: floatEmoji 3s ease-in-out infinite; }
-    @keyframes floatEmoji { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-    .pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
-    @keyframes pulseGlow { 0%,100% { box-shadow: 0 0 5px rgba(255,255,255,0.3); } 50% { box-shadow: 0 0 20px rgba(255,255,255,0.6); } }
     .stagger-1 { animation-delay: 0.1s; }
     .stagger-2 { animation-delay: 0.2s; }
     .stagger-3 { animation-delay: 0.3s; }
     .stagger-4 { animation-delay: 0.4s; }
-    .progress-fill { transition: width 0.5s ease; }
+    
+    /* Decorative Animations */
+    .float-emoji { animation: floatEmoji 3s ease-in-out infinite; }
+    @keyframes floatEmoji { 
+      0%, 100% { transform: translateY(0); } 
+      50% { transform: translateY(-10px); } 
+    }
+    .pulse-glow { animation: pulseGlow 2s ease-in-out infinite; }
+    @keyframes pulseGlow { 
+      0%, 100% { box-shadow: 0 0 5px rgba(255,255,255,0.3); } 
+      50% { box-shadow: 0 0 20px rgba(255,255,255,0.6); } 
+    }
+    
+    /* UI Interactions */
+    .progress-fill { transition: width 0.5s ease-out; }
     .tab-active { transform: scale(1.05); }
     .quiz-option { transition: all 0.2s ease; }
     .quiz-option:hover { transform: translateY(-2px); }
-    .confetti { position: fixed; pointer-events: none; z-index: 999; }
   </style>
-  <style>body { box-sizing: border-box; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
- </head>
- <body class="h-full">
-  <div id="app" class="h-full w-full overflow-auto" style="background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 25%, #FEC89A 50%, #A0E7E5 75%, #B4F8C8 100%);"><!-- Header -->
-   <header class="text-center pt-6 pb-4 px-4 relative">
-    <div class="inline-block"><span class="float-emoji inline-block text-4xl">⛪</span>
+</head>
+
+<body class="h-full">
+  <div id="app" class="h-full w-full overflow-auto" style="background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 25%, #FEC89A 50%, #A0E7E5 75%, #B4F8C8 100%);">
+    
+    <header class="text-center pt-6 pb-4 px-4 relative">
+      <div class="inline-block"><span class="float-emoji inline-block text-4xl">⛪</span></div>
+      <h1 id="main-title" class="font-heading text-3xl md:text-4xl font-900 text-white drop-shadow-lg mt-2">Sifat-Sifat Gereja</h1>
+      <p id="subtitle" class="font-body text-white/90 text-base md:text-lg font-600 mt-1">Pelajaran Agama Katolik Kelas 6</p>
+      <div class="flex justify-center gap-2 mt-3 text-2xl">
+        <span class="float-emoji" style="animation-delay:0.2s">✝️</span> 
+        <span class="float-emoji" style="animation-delay:0.5s">📖</span> 
+        <span class="float-emoji" style="animation-delay:0.8s">🕊️</span> 
+        <span class="float-emoji" style="animation-delay:1.1s">💒</span>
+      </div>
+    </header>
+
+    <div class="max-w-2xl mx-auto px-4 mb-4">
+      <div class="bg-white/30 rounded-full h-3 overflow-hidden backdrop-blur-sm">
+        <div id="progress-bar" class="progress-fill h-full rounded-full bg-gradient-to-r from-yellow-400 to-orange-400" style="width:0%"></div>
+      </div>
+      <p id="progress-text" class="text-white/80 text-xs font-body text-center mt-1">Klik kartu untuk mulai belajar! 👆</p>
     </div>
-    <h1 id="main-title" class="font-heading text-3xl md:text-4xl font-900 text-white drop-shadow-lg mt-2">Sifat-Sifat Gereja</h1>
-    <p id="subtitle" class="font-body text-white/90 text-base md:text-lg font-600 mt-1">Pelajaran Agama Katolik Kelas 6</p>
-    <div class="flex justify-center gap-2 mt-3 text-2xl"><span class="float-emoji" style="animation-delay:0.2s">✝️</span> <span class="float-emoji" style="animation-delay:0.5s">📖</span> <span class="float-emoji" style="animation-delay:0.8s">🕊️</span> <span class="float-emoji" style="animation-delay:1.1s">💒</span>
-    </div>
-   </header><!-- Progress Bar -->
-   <div class="max-w-2xl mx-auto px-4 mb-4">
-    <div class="bg-white/30 rounded-full h-3 overflow-hidden backdrop-blur-sm">
-     <div id="progress-bar" class="progress-fill h-full rounded-full bg-gradient-to-r from-yellow-400 to-orange-400" style="width:0%"></div>
-    </div>
-    <p id="progress-text" class="text-white/80 text-xs font-body text-center mt-1">Klik kartu untuk mulai belajar! 👆</p>
-   </div><!-- Navigation Tabs -->
-   <nav class="flex justify-center gap-2 px-4 mb-5 flex-wrap"><button onclick="showSection('cards')" id="tab-cards" class="tab-btn font-body font-700 px-4 py-2 rounded-full text-sm transition-all bg-white text-orange-600 shadow-lg tab-active">📚 Materi</button> <button onclick="showSection('quiz')" id="tab-quiz" class="tab-btn font-body font-700 px-4 py-2 rounded-full text-sm transition-all bg-white/40 text-white hover:bg-white/60">🧠 Kuis</button> <button onclick="showSection('summary')" id="tab-summary" class="tab-btn font-body font-700 px-4 py-2 rounded-full text-sm transition-all bg-white/40 text-white hover:bg-white/60">📝 Ringkasan</button>
-   </nav><!-- SECTION: Cards -->
-   <section id="section-cards" class="max-w-4xl mx-auto px-4 pb-8">
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5" id="card-grid"></div>
-    <p class="text-center text-white/70 font-body text-sm mt-4">💡 Klik setiap kartu untuk membaca penjelasan!</p>
-   </section><!-- SECTION: Quiz -->
-   <section id="section-quiz" class="max-w-2xl mx-auto px-4 pb-8 hidden">
-    <div id="quiz-container" class="bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-xl">
-     <div id="quiz-header" class="flex justify-between items-center mb-4"><span id="quiz-number" class="font-heading text-lg font-800 text-purple-600">Soal 1/5</span> <span id="quiz-score" class="font-body font-700 text-orange-500 bg-orange-100 px-3 py-1 rounded-full text-sm">⭐ 0 poin</span>
-     </div>
-     <p id="quiz-question" class="font-body font-700 text-gray-800 text-lg mb-5"></p>
-     <div id="quiz-options" class="space-y-3"></div>
-     <div id="quiz-feedback" class="mt-4 p-3 rounded-2xl text-center font-body font-700 hidden"></div><button id="quiz-next" class="mt-4 w-full py-3 rounded-2xl font-body font-700 text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all hidden" onclick="nextQuestion()">Soal Berikutnya ➡️</button>
-     <div id="quiz-result" class="text-center hidden">
-      <div class="text-6xl mb-3" id="result-emoji"></div>
-      <h3 id="result-title" class="font-heading text-2xl font-800 text-purple-700 mb-2"></h3>
-      <p id="result-text" class="font-body text-gray-600 mb-4"></p><button onclick="resetQuiz()" class="px-6 py-3 rounded-2xl font-body font-700 text-white bg-gradient-to-r from-green-400 to-teal-500 hover:from-green-500 hover:to-teal-600 transition-all">🔄 Coba Lagi</button>
-     </div>
-    </div>
-   </section><!-- SECTION: Summary -->
-   <section id="section-summary" class="max-w-2xl mx-auto px-4 pb-8 hidden">
-    <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-xl">
-     <h2 class="font-heading text-2xl font-800 text-center text-purple-700 mb-5">📝 Ringkasan Materi</h2>
-     <div class="space-y-4" id="summary-content"></div>
-     <div class="mt-6 p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl border-2 border-yellow-300">
-      <p class="font-body font-700 text-orange-700 text-center text-sm">🙏 "Aku percaya akan Gereja yang Satu, Kudus, Katolik, dan Apostolik" — Syahadat Iman Nicea-Konstantinopel</p>
-     </div>
-    </div>
-   </section>
+
+    <nav class="flex justify-center gap-2 px-4 mb-5 flex-wrap">
+      <button onclick="showSection('cards')" id="tab-cards" class="tab-btn font-body font-700 px-4 py-2 rounded-full text-sm transition-all bg-white text-orange-600 shadow-lg tab-active">📚 Materi</button> 
+      <button onclick="showSection('quiz')" id="tab-quiz" class="tab-btn font-body font-700 px-4 py-2 rounded-full text-sm transition-all bg-white/40 text-white hover:bg-white/60">🧠 Kuis</button> 
+      <button onclick="showSection('summary')" id="tab-summary" class="tab-btn font-body font-700 px-4 py-2 rounded-full text-sm transition-all bg-white/40 text-white hover:bg-white/60">📝 Ringkasan</button>
+    </nav>
+
+    <section id="section-cards" class="max-w-4xl mx-auto px-4 pb-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5" id="card-grid"></div>
+      <p class="text-center text-white/70 font-body text-sm mt-4">💡 Klik setiap kartu untuk membaca penjelasan!</p>
+    </section>
+
+    <section id="section-quiz" class="max-w-2xl mx-auto px-4 pb-8 hidden">
+      <div id="quiz-container" class="bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-xl">
+        <div id="quiz-header" class="flex justify-between items-center mb-4">
+          <span id="quiz-number" class="font-heading text-lg font-800 text-purple-600">Soal 1/5</span> 
+          <span id="quiz-score" class="font-body font-700 text-orange-500 bg-orange-100 px-3 py-1 rounded-full text-sm">⭐ 0 poin</span>
+        </div>
+        <p id="quiz-question" class="font-body font-700 text-gray-800 text-lg mb-5"></p>
+        <div id="quiz-options" class="space-y-3"></div>
+        <div id="quiz-feedback" class="mt-4 p-3 rounded-2xl text-center font-body font-700 hidden"></div>
+        <button id="quiz-next" class="mt-4 w-full py-3 rounded-2xl font-body font-700 text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 transition-all hidden" onclick="nextQuestion()">Soal Berikutnya ➡️</button>
+        
+        <div id="quiz-result" class="text-center hidden">
+          <div class="text-6xl mb-3" id="result-emoji"></div>
+          <h3 id="result-title" class="font-heading text-2xl font-800 text-purple-700 mb-2"></h3>
+          <p id="result-text" class="font-body text-gray-600 mb-4"></p>
+          <button onclick="resetQuiz()" class="px-6 py-3 rounded-2xl font-body font-700 text-white bg-gradient-to-r from-green-400 to-teal-500 hover:from-green-500 hover:to-teal-600 transition-all">🔄 Coba Lagi</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-summary" class="max-w-2xl mx-auto px-4 pb-8 hidden">
+      <div class="bg-white/90 backdrop-blur-sm rounded-3xl p-6 shadow-xl">
+        <h2 class="font-heading text-2xl font-800 text-center text-purple-700 mb-5">📝 Ringkasan Materi</h2>
+        <div class="space-y-4" id="summary-content"></div>
+        <div class="mt-6 p-4 bg-gradient-to-r from-yellow-100 to-orange-100 rounded-2xl border-2 border-yellow-300">
+          <p class="font-body font-700 text-orange-700 text-center text-sm">🙏 "Aku percaya akan Gereja yang Satu, Kudus, Katolik, dan Apostolik" — Syahadat Iman Nicea-Konstantinopel</p>
+        </div>
+      </div>
+    </section>
+
   </div>
+
   <script>
+    // --- DATA ---
     const churchData = [
       {
-        id: 'satu',
-        emoji: '🤝',
-        title: 'SATU',
-        subtitle: 'Gereja Yang Satu',
-        color: 'from-blue-400 to-indigo-500',
-        bgLight: 'bg-blue-50',
-        textColor: 'text-blue-700',
-        borderColor: 'border-blue-300',
+        id: 'satu', emoji: '🤝', title: 'SATU', subtitle: 'Gereja Yang Satu',
+        color: 'from-blue-400 to-indigo-500', bgLight: 'bg-blue-50', textColor: 'text-blue-700', borderColor: 'border-blue-300',
         shortDesc: 'Bersatu dalam iman, harapan, dan kasih',
         fullDesc: 'Gereja disebut SATU karena semua umat Katolik di seluruh dunia dipersatukan oleh satu iman, satu baptisan, dan satu Tuhan yaitu Yesus Kristus. Meskipun kita berbeda suku, bahasa, dan budaya, kita tetap satu keluarga Allah! 🌍',
         keyPoints: ['Satu iman kepada Yesus Kristus', 'Satu baptisan yang sama', 'Dipimpin oleh satu Paus', 'Dipersatukan oleh Roh Kudus'],
         verse: 'Ef 4:4-5 — "Satu tubuh dan satu Roh... satu Tuhan, satu iman, satu baptisan"'
       },
       {
-        id: 'kudus',
-        emoji: '✨',
-        title: 'KUDUS',
-        subtitle: 'Gereja Yang Kudus',
-        color: 'from-amber-400 to-yellow-500',
-        bgLight: 'bg-yellow-50',
-        textColor: 'text-amber-700',
-        borderColor: 'border-yellow-300',
+        id: 'kudus', emoji: '✨', title: 'KUDUS', subtitle: 'Gereja Yang Kudus',
+        color: 'from-amber-400 to-yellow-500', bgLight: 'bg-yellow-50', textColor: 'text-amber-700', borderColor: 'border-yellow-300',
         shortDesc: 'Dikuduskan oleh Allah sendiri',
         fullDesc: 'Gereja disebut KUDUS karena didirikan oleh Yesus Kristus yang Maha Kudus, dan Roh Kudus selalu menyertai Gereja. Gereja membantu kita menjadi kudus melalui doa, sakramen, dan perbuatan baik! 🙏',
         keyPoints: ['Didirikan oleh Yesus yang Kudus', 'Roh Kudus menyertai Gereja', 'Menguduskan umat melalui sakramen', 'Banyak orang kudus sebagai teladan'],
         verse: '1 Ptr 2:9 — "Kamu adalah bangsa yang terpilih, imamat yang rajani, bangsa yang kudus"'
       },
       {
-        id: 'katolik',
-        emoji: '🌏',
-        title: 'KATOLIK',
-        subtitle: 'Gereja Yang Katolik',
-        color: 'from-emerald-400 to-green-500',
-        bgLight: 'bg-green-50',
-        textColor: 'text-emerald-700',
-        borderColor: 'border-green-300',
+        id: 'katolik', emoji: '🌏', title: 'KATOLIK', subtitle: 'Gereja Yang Katolik',
+        color: 'from-emerald-400 to-green-500', bgLight: 'bg-green-50', textColor: 'text-emerald-700', borderColor: 'border-green-300',
         shortDesc: 'Universal — untuk semua orang di seluruh dunia',
         fullDesc: 'Kata KATOLIK berarti "universal" atau "am" (umum). Gereja Katolik ada di seluruh dunia dan terbuka untuk semua orang tanpa terkecuali. Dari ujung barat sampai timur, dari utara ke selatan, Gereja hadir untuk semua! 🌎',
         keyPoints: ['Katolik artinya universal/umum', 'Tersebar di seluruh dunia', 'Terbuka untuk semua orang', 'Mengajarkan kebenaran yang lengkap'],
         verse: 'Mat 28:19 — "Pergilah, jadikanlah semua bangsa murid-Ku"'
       },
       {
-        id: 'apostolik',
-        emoji: '🏛️',
-        title: 'APOSTOLIK',
-        subtitle: 'Gereja Yang Apostolik',
-        color: 'from-purple-400 to-violet-500',
-        bgLight: 'bg-purple-50',
-        textColor: 'text-purple-700',
-        borderColor: 'border-purple-300',
+        id: 'apostolik', emoji: '🏛️', title: 'APOSTOLIK', subtitle: 'Gereja Yang Apostolik',
+        color: 'from-purple-400 to-violet-500', bgLight: 'bg-purple-50', textColor: 'text-purple-700', borderColor: 'border-purple-300',
         shortDesc: 'Didirikan di atas para Rasul',
         fullDesc: 'Gereja disebut APOSTOLIK karena didirikan di atas dasar para Rasul (Apostol). Ajaran Gereja diturunkan dari para Rasul sampai sekarang melalui para Uskup dan Paus. Ini seperti estafet iman dari zaman Yesus! 🏃‍♂️',
         keyPoints: ['Didirikan atas dasar para Rasul', 'Paus adalah penerus Santo Petrus', 'Ajaran diturunkan secara turun-temurun', 'Suksesi apostolik yang tak terputus'],
@@ -165,18 +178,17 @@
       { q: 'Melalui apa Gereja menguduskan umatnya? ✨', options: ['Hukum saja', 'Sakramen-sakramen', 'Uang', 'Bangunan gereja'], answer: 1 }
     ];
 
+    // --- STATE ---
     let flippedCards = new Set();
     let quizIndex = 0, quizScore = 0, answered = false;
 
+    // --- FUNCTIONS ---
     function renderCards() {
       const grid = document.getElementById('card-grid');
-      grid.innerHTML = '';
-      churchData.forEach((d, i) => {
-        const card = document.createElement('div');
-        card.className = `card-flip bounce-in stagger-${i+1} cursor-pointer`;
-        card.id = `card-${d.id}`;
-        card.onclick = () => flipCard(d.id);
-        card.innerHTML = `
+      
+      // Menggunakan map & join untuk optimasi performa render DOM
+      grid.innerHTML = churchData.map((d, i) => `
+        <div class="card-flip bounce-in stagger-${i+1} cursor-pointer" id="card-${d.id}" onclick="flipCard('${d.id}')">
           <div class="card-inner relative" style="min-height:220px">
             <div class="card-front absolute inset-0 bg-gradient-to-br ${d.color} rounded-3xl p-5 shadow-xl pulse-glow flex flex-col items-center justify-center text-center">
               <span class="text-5xl mb-3">${d.emoji}</span>
@@ -192,13 +204,15 @@
               <p class="font-body text-gray-700 text-sm leading-relaxed mb-3">${d.fullDesc}</p>
               <div class="${d.bgLight} rounded-2xl p-3 mb-2">
                 <p class="font-body font-700 text-xs ${d.textColor} mb-1">📌 Poin Penting:</p>
-                <ul class="space-y-1">${d.keyPoints.map(p => `<li class="font-body text-xs text-gray-600 flex gap-1"><span>•</span><span>${p}</span></li>`).join('')}</ul>
+                <ul class="space-y-1">
+                  ${d.keyPoints.map(p => `<li class="font-body text-xs text-gray-600 flex gap-1"><span>•</span><span>${p}</span></li>`).join('')}
+                </ul>
               </div>
               <p class="font-body text-xs text-gray-400 italic">📖 ${d.verse}</p>
             </div>
-          </div>`;
-        grid.appendChild(card);
-      });
+          </div>
+        </div>
+      `).join('');
     }
 
     function flipCard(id) {
@@ -212,61 +226,84 @@
 
     function updateProgress() {
       const pct = (flippedCards.size / 4) * 100;
-      document.getElementById('progress-bar').style.width = pct + '%';
-      const texts = ['Klik kartu untuk mulai belajar! 👆', 'Bagus! Lanjutkan! 🎉', 'Hebat! Terus semangat! 💪', 'Hampir selesai! 🔥', 'Luar biasa! Semua materi sudah dibaca! 🏆'];
+      document.getElementById('progress-bar').style.width = `${pct}%`;
+      const texts = [
+        'Klik kartu untuk mulai belajar! 👆', 
+        'Bagus! Lanjutkan! 🎉', 
+        'Hebat! Terus semangat! 💪', 
+        'Hampir selesai! 🔥', 
+        'Luar biasa! Semua materi sudah dibaca! 🏆'
+      ];
       document.getElementById('progress-text').textContent = texts[flippedCards.size];
     }
 
     function showSection(name) {
-      ['cards','quiz','summary'].forEach(s => {
-        document.getElementById(`section-${s}`).classList.toggle('hidden', s !== name);
+      ['cards', 'quiz', 'summary'].forEach(s => {
+        const isTarget = s === name;
+        document.getElementById(`section-${s}`).classList.toggle('hidden', !isTarget);
+        
         const tab = document.getElementById(`tab-${s}`);
-        if (s === name) { tab.className = 'tab-btn font-body font-700 px-4 py-2 rounded-full text-sm transition-all bg-white text-orange-600 shadow-lg tab-active'; }
-        else { tab.className = 'tab-btn font-body font-700 px-4 py-2 rounded-full text-sm transition-all bg-white/40 text-white hover:bg-white/60'; }
+        tab.className = isTarget 
+          ? 'tab-btn font-body font-700 px-4 py-2 rounded-full text-sm transition-all bg-white text-orange-600 shadow-lg tab-active' 
+          : 'tab-btn font-body font-700 px-4 py-2 rounded-full text-sm transition-all bg-white/40 text-white hover:bg-white/60';
       });
+
       if (name === 'quiz' && quizIndex === 0 && quizScore === 0) loadQuestion();
       if (name === 'summary') renderSummary();
     }
 
     function loadQuestion() {
       if (quizIndex >= quizData.length) return showResult();
+      
       answered = false;
       const q = quizData[quizIndex];
+      
       document.getElementById('quiz-number').textContent = `Soal ${quizIndex+1}/${quizData.length}`;
       document.getElementById('quiz-score').textContent = `⭐ ${quizScore} poin`;
       document.getElementById('quiz-question').textContent = q.q;
+      
       document.getElementById('quiz-feedback').classList.add('hidden');
       document.getElementById('quiz-next').classList.add('hidden');
       document.getElementById('quiz-result').classList.add('hidden');
       document.getElementById('quiz-header').classList.remove('hidden');
       document.getElementById('quiz-question').classList.remove('hidden');
+      
       const opts = document.getElementById('quiz-options');
-      opts.innerHTML = '';
       opts.classList.remove('hidden');
-      const colors = ['bg-blue-100 hover:bg-blue-200 border-blue-300 text-blue-800','bg-green-100 hover:bg-green-200 border-green-300 text-green-800','bg-purple-100 hover:bg-purple-200 border-purple-300 text-purple-800','bg-orange-100 hover:bg-orange-200 border-orange-300 text-orange-800'];
-      const letters = ['A','B','C','D'];
-      q.options.forEach((o, i) => {
-        const btn = document.createElement('button');
-        btn.className = `quiz-option w-full text-left p-3 rounded-2xl border-2 font-body font-600 text-sm ${colors[i]}`;
-        btn.innerHTML = `<span class="font-800 mr-2">${letters[i]}.</span>${o}`;
-        btn.onclick = () => checkAnswer(i);
-        opts.appendChild(btn);
-      });
+      
+      const colors = [
+        'bg-blue-100 hover:bg-blue-200 border-blue-300 text-blue-800',
+        'bg-green-100 hover:bg-green-200 border-green-300 text-green-800',
+        'bg-purple-100 hover:bg-purple-200 border-purple-300 text-purple-800',
+        'bg-orange-100 hover:bg-orange-200 border-orange-300 text-orange-800'
+      ];
+      const letters = ['A', 'B', 'C', 'D'];
+      
+      opts.innerHTML = q.options.map((o, i) => `
+        <button class="quiz-option w-full text-left p-3 rounded-2xl border-2 font-body font-600 text-sm ${colors[i]}" onclick="checkAnswer(${i})">
+          <span class="font-800 mr-2">${letters[i]}.</span>${o}
+        </button>
+      `).join('');
     }
 
     function checkAnswer(i) {
       if (answered) return;
       answered = true;
+      
       const q = quizData[quizIndex];
       const fb = document.getElementById('quiz-feedback');
-      fb.classList.remove('hidden');
       const btns = document.getElementById('quiz-options').children;
+      
+      fb.classList.remove('hidden');
+      
       for (let b = 0; b < btns.length; b++) {
         btns[b].style.opacity = b === q.answer ? '1' : '0.4';
-        if (b === q.answer) btns[b].classList.add('ring-4','ring-green-400');
-        if (b === i && i !== q.answer) btns[b].classList.add('ring-4','ring-red-400');
         btns[b].style.pointerEvents = 'none';
+        
+        if (b === q.answer) btns[b].classList.add('ring-4', 'ring-green-400');
+        if (b === i && i !== q.answer) btns[b].classList.add('ring-4', 'ring-red-400');
       }
+      
       if (i === q.answer) {
         quizScore += 20;
         fb.className = 'mt-4 p-3 rounded-2xl text-center font-body font-700 bg-green-100 text-green-700';
@@ -275,49 +312,61 @@
         fb.className = 'mt-4 p-3 rounded-2xl text-center font-body font-700 bg-red-100 text-red-600';
         fb.textContent = `❌ Belum tepat. Jawaban yang benar: ${q.options[q.answer]}`;
       }
+      
       document.getElementById('quiz-score').textContent = `⭐ ${quizScore} poin`;
-      document.getElementById('quiz-next').classList.remove('hidden');
-      document.getElementById('quiz-next').textContent = quizIndex < quizData.length - 1 ? 'Soal Berikutnya ➡️' : 'Lihat Hasil 🏆';
+      
+      const nextBtn = document.getElementById('quiz-next');
+      nextBtn.classList.remove('hidden');
+      nextBtn.textContent = quizIndex < quizData.length - 1 ? 'Soal Berikutnya ➡️' : 'Lihat Hasil 🏆';
     }
 
-    function nextQuestion() { quizIndex++; loadQuestion(); }
+    function nextQuestion() { 
+      quizIndex++; 
+      loadQuestion(); 
+    }
 
     function showResult() {
-      document.getElementById('quiz-header').classList.add('hidden');
-      document.getElementById('quiz-question').classList.add('hidden');
-      document.getElementById('quiz-options').classList.add('hidden');
-      document.getElementById('quiz-feedback').classList.add('hidden');
-      document.getElementById('quiz-next').classList.add('hidden');
-      const res = document.getElementById('quiz-result');
-      res.classList.remove('hidden');
+      ['quiz-header', 'quiz-question', 'quiz-options', 'quiz-feedback', 'quiz-next'].forEach(id => {
+        document.getElementById(id).classList.add('hidden');
+      });
+      
+      document.getElementById('quiz-result').classList.remove('hidden');
+      
       let emoji, title, text;
-      if (quizScore === 100) { emoji = '🏆'; title = 'SEMPURNA!'; text = 'Wow! Kamu menguasai semua materi! Luar biasa! 🌟'; }
-      else if (quizScore >= 60) { emoji = '😊'; title = 'Bagus Sekali!'; text = `Skor kamu ${quizScore}/100. Terus belajar ya!`; }
-      else { emoji = '💪'; title = 'Semangat!'; text = `Skor kamu ${quizScore}/100. Coba baca materinya lagi ya!`; }
+      if (quizScore === 100) { 
+        emoji = '🏆'; title = 'SEMPURNA!'; text = 'Wow! Kamu menguasai semua materi! Luar biasa! 🌟'; 
+      } else if (quizScore >= 60) { 
+        emoji = '😊'; title = 'Bagus Sekali!'; text = `Skor kamu ${quizScore}/100. Terus belajar ya!`; 
+      } else { 
+        emoji = '💪'; title = 'Semangat!'; text = `Skor kamu ${quizScore}/100. Coba baca materinya lagi ya!`; 
+      }
+      
       document.getElementById('result-emoji').textContent = emoji;
       document.getElementById('result-title').textContent = title;
       document.getElementById('result-text').textContent = text;
     }
 
-    function resetQuiz() { quizIndex = 0; quizScore = 0; loadQuestion(); }
-
-    function renderSummary() {
-      const el = document.getElementById('summary-content');
-      el.innerHTML = '';
-      churchData.forEach(d => {
-        el.innerHTML += `
-          <div class="flex gap-3 items-start ${d.bgLight} rounded-2xl p-4 border ${d.borderColor}">
-            <span class="text-3xl flex-shrink-0">${d.emoji}</span>
-            <div>
-              <h3 class="font-heading font-800 ${d.textColor}">${d.title}</h3>
-              <p class="font-body text-gray-600 text-sm">${d.shortDesc}</p>
-              <p class="font-body text-gray-400 text-xs mt-1 italic">📖 ${d.verse}</p>
-            </div>
-          </div>`;
-      });
+    function resetQuiz() { 
+      quizIndex = 0; 
+      quizScore = 0; 
+      loadQuestion(); 
     }
 
-    // Element SDK
+    function renderSummary() {
+      // Optimasi render DOM menggunakan map & join
+      document.getElementById('summary-content').innerHTML = churchData.map(d => `
+        <div class="flex gap-3 items-start ${d.bgLight} rounded-2xl p-4 border ${d.borderColor}">
+          <span class="text-3xl flex-shrink-0">${d.emoji}</span>
+          <div>
+            <h3 class="font-heading font-800 ${d.textColor}">${d.title}</h3>
+            <p class="font-body text-gray-600 text-sm">${d.shortDesc}</p>
+            <p class="font-body text-gray-400 text-xs mt-1 italic">📖 ${d.verse}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // --- ELEMENT SDK CONFIGURATION ---
     const defaultConfig = {
       main_title: 'Sifat-Sifat Gereja',
       subtitle: 'Pelajaran Agama Katolik Kelas 6',
@@ -330,43 +379,49 @@
       font_size: 16
     };
 
-    window.elementSdk.init({
-      defaultConfig,
-      onConfigChange: async (config) => {
-        const t = (k) => config[k] || defaultConfig[k];
-        document.getElementById('main-title').textContent = t('main_title');
-        document.getElementById('subtitle').textContent = t('subtitle');
+    // Keamanan ekstra jika script SDK belum termuat
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange: async (config) => {
+          const t = (k) => config[k] || defaultConfig[k];
+          document.getElementById('main-title').textContent = t('main_title');
+          document.getElementById('subtitle').textContent = t('subtitle');
 
-        const app = document.getElementById('app');
-        app.style.background = `linear-gradient(135deg, ${t('background_color')} 0%, #FF8E53 25%, #FEC89A 50%, #A0E7E5 75%, #B4F8C8 100%)`;
+          const app = document.getElementById('app');
+          app.style.background = `linear-gradient(135deg, ${t('background_color')} 0%, #FF8E53 25%, #FEC89A 50%, #A0E7E5 75%, #B4F8C8 100%)`;
 
-        const font = t('font_family');
-        const baseSize = t('font_size');
-        document.getElementById('main-title').style.fontFamily = `${font}, Baloo 2, cursive`;
-        document.getElementById('main-title').style.fontSize = `${baseSize * 2}px`;
-        document.getElementById('subtitle').style.fontFamily = `${font}, Nunito, sans-serif`;
-        document.getElementById('subtitle').style.fontSize = `${baseSize}px`;
-      },
-      mapToCapabilities: (config) => {
-        const c = (key) => ({
-          get: () => config[key] || defaultConfig[key],
-          set: (v) => { config[key] = v; window.elementSdk.setConfig({ [key]: v }); }
-        });
-        return {
-          recolorables: [c('background_color'), c('surface_color'), c('text_color'), c('primary_action'), c('secondary_action')],
-          borderables: [],
-          fontEditable: c('font_family'),
-          fontSizeable: { get: () => config.font_size || defaultConfig.font_size, set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); } }
-        };
-      },
-      mapToEditPanelValues: (config) => new Map([
-        ['main_title', config.main_title || defaultConfig.main_title],
-        ['subtitle', config.subtitle || defaultConfig.subtitle]
-      ])
-    });
+          const font = t('font_family');
+          const baseSize = t('font_size');
+          document.getElementById('main-title').style.fontFamily = `${font}, Baloo 2, cursive`;
+          document.getElementById('main-title').style.fontSize = `${baseSize * 2}px`;
+          document.getElementById('subtitle').style.fontFamily = `${font}, Nunito, sans-serif`;
+          document.getElementById('subtitle').style.fontSize = `${baseSize}px`;
+        },
+        mapToCapabilities: (config) => {
+          const c = (key) => ({
+            get: () => config[key] || defaultConfig[key],
+            set: (v) => { config[key] = v; window.elementSdk.setConfig({ [key]: v }); }
+          });
+          return {
+            recolorables: [c('background_color'), c('surface_color'), c('text_color'), c('primary_action'), c('secondary_action')],
+            borderables: [],
+            fontEditable: c('font_family'),
+            fontSizeable: { 
+              get: () => config.font_size || defaultConfig.font_size, 
+              set: (v) => { config.font_size = v; window.elementSdk.setConfig({ font_size: v }); } 
+            }
+          };
+        },
+        mapToEditPanelValues: (config) => new Map([
+          ['main_title', config.main_title || defaultConfig.main_title],
+          ['subtitle', config.subtitle || defaultConfig.subtitle]
+        ])
+      });
+    }
 
+    // Initialize UI
     renderCards();
-    lucide.createIcons();
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9ec6f5d7d4870ddc',t:'MTc3NjIxNDI3MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</body>
 </html>
